@@ -1,0 +1,13 @@
+# Course material (assignment brief)
+docs/
+
+# Python environment & caches
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
