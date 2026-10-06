@@ -9,7 +9,7 @@ The repository is built up in stages. Each stage is committed as it is completed
 | Stage | Contents | Status |
 |---|---|---|
 | 1. Data Preparation | Loading, missing values, EDA, target and feature selection, scaling, 80/20 split | Done |
-| 2. Model Training | Linear and polynomial regression from scratch (checked against scikit-learn); Decision Tree with a `max_depth` sweep | Planned |
+| 2. Model Training | Linear and polynomial regression from scratch (checked against scikit-learn); Decision Tree with a `max_depth` sweep; CV tuning and ablations | Done |
 | 3. Model Evaluation | MSE, RMSE, R²; metric vs epoch and vs tree depth | Planned |
 | 4. Model Visualization | Depth-3 tree plot, feature importances | Planned |
 | 5. Baseline Comparison | Linear regression vs Decision Tree | Planned |
@@ -30,6 +30,7 @@ Full details and reasoning are in [`docs/data_preparation/README.md`](docs/data_
 data/air+quality/        UCI Air Quality dataset (CSV and XLSX)
 src/notebooks/           Main notebook: air_quality_regression.ipynb
 docs/data_preparation/   Notes on the Stage 1 decisions
+docs/model_training/     Notes on the Stage 2 models and results
 ```
 
 ## Running the notebook
