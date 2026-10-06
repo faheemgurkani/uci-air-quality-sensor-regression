@@ -57,3 +57,31 @@ Scratch and scikit-learn agree to numerical precision for every family and solve
 - Differences below about 0.03 RMSE are within fold-to-fold noise (CV sd ≈ 0.05).
 - The depth-sweep test curve is shown for the Stage 3 plots only. Selection used CV.
 - A few explanations in the notebook are flagged as "plausible, not tested" (for example the log-target result).
+
+## Evaluation and implementation notes
+
+- **Metrics:** this is a regression task, so every model is scored with MSE, RMSE, R² and MAE on the train set, the test set and (where used for selection) the week-grouped CV. The metric functions are written from scratch in NumPy and checked against `sklearn.metrics`. Accuracy, precision, recall and F1 are classification metrics and do not apply to a continuous CO target, so they are not reported. The nearest equivalent is the error table per CO band (Low to Very high).
+- **Implementation:** the from-scratch parts use NumPy only (no PyTorch): linear regression (normal equation, batch gradient descent, Adam), polynomial feature expansion, and the metrics. They are trained and reported the same way as the scikit-learn versions. The scikit-learn estimator interface and CV tooling are used only as a wrapper; no scikit-learn algorithm runs inside the from-scratch code. The decision trees are scikit-learn, as the assignment specifies.
+- **Beyond the brief:** week-grouped CV for all choices, learning-rate stability analysis, tree grid and pruning, three importance views, ablations (features, scaling, log target, criterion, ridge, learning curves, per-regime errors, out-of-time split).
+- **Inputs stored for Stage 3:** per-epoch histories, predictions, residuals and fitted models (see the artifact list above).
+- **Tooling note:** `lxml` was installed in `.venv` only to read the notebook's tables while checking. It is not needed to run the notebook.
+
+## Summary of Stage 2 outcomes
+
+- **Status:** Stage 2 is in the same notebook as Stage 1. It runs end to end with no errors and has 24 figures in total (Stages 1 and 2 together).
+- **Depth experiment:** depth 3 under-fits, depth 5 is the best of the four required values, and depth 10 and `None` over-fit. The unrestricted tree memorises the training set (R² = 1.000 on train, 0.817 on test).
+- **Main feature:** `PT08.S2(NMHC)` dominates every importance view and every ablation. Weather alone is no better than the mean predictor.
+- **Weak spot:** every model under-predicts the rare Very-high CO hours.
+- **Correction to Stage 1:** Stage 1 worried that a time-ordered split would be much harder. In Stage 2 it is not materially harder: RMSE is about the same and the model ranking is unchanged. The notebook reports the new result, not the old claim.
+- **Validation:** week-grouped CV was used for every choice. The test set was never used to choose anything.
+- **Learning rate:** the stable limit is 0.238, confirmed experimentally (0.25 diverges, 0.15 chosen).
+- **Beyond the brief:** tree grid and pruning; tree, permutation and bootstrap-CI importance; ablations for features (groups and drop-one), scaling, log target, split criterion, ridge, learning curves, per-regime errors and the time-ordered split.
+- **Inputs for Stage 3:** per-epoch histories, predictions and residuals are stored in memory.
+- **Untested explanations:** some explanations in the notebook are marked "plausible, not tested", for example the log-target result.
+
+## Files touched in this stage
+
+- `src/notebooks/air_quality_regression.ipynb`: Stage 2 added.
+- `docs/model_training/README.md`: these notes.
+- `README.md`: status table shows Stage 2 as done.
+- `CLAUDE.md`: updated locally only (gitignored).
