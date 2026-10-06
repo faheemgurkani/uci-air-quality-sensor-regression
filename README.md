@@ -2,7 +2,7 @@
 
 Predicting the true concentration of an air pollutant from low-cost metal-oxide sensor signals and weather readings, using the [UCI Air Quality dataset](https://archive.ics.uci.edu/dataset/360/air+quality) (hourly measurements from an Italian city, March 2004 – April 2005). This is Assignment #1 of the Machine Learning course (MS, NUST).
 
-Everything lives in one notebook, [`src/notebooks/air_quality_regression.ipynb`](src/notebooks/air_quality_regression.ipynb), saved with its outputs so results can be read directly on GitHub. A PDF export with the code, results and discussion is in [`docs/report/`](docs/report/air_quality_regression_report.pdf).
+Everything lives in one notebook, [`src/notebooks/air_quality_regression.ipynb`](src/notebooks/air_quality_regression.ipynb), saved with its outputs so results can be read directly on GitHub. A PDF export of the executed notebook (full code and outputs) is in [`docs/report/air_quality_regression_notebook.pdf`](docs/report/air_quality_regression_notebook.pdf). The house-style assignment report (cover page, results, discussion, code excerpts) is built from the notebook by the scripts in `src/report/`.
 
 ## Project status
 
@@ -44,9 +44,10 @@ Test scores are somewhat optimistic because of the random split of autocorrelate
 ```
 data/air+quality/        UCI Air Quality dataset (CSV and XLSX)
 src/notebooks/           Main notebook: air_quality_regression.ipynb
+src/report/              Scripts that build the assignment report from the notebook
 docs/                    Notes for each stage (data_preparation, model_training,
                          model_evaluation, model_visualization,
-                         baseline_comparison, discussion) and report/ (PDF)
+                         baseline_comparison, discussion) and report/ (notebook PDF export)
 ```
 
 ## Running the notebook
@@ -67,6 +68,17 @@ To re-execute it from the command line:
 ```bash
 jupyter nbconvert --to notebook --execute --inplace src/notebooks/air_quality_regression.ipynb
 ```
+
+## Building the assignment report
+
+The report is generated from the executed notebook, so its figures and numbers cannot drift from the analysis:
+
+```bash
+.venv/bin/python src/report/export_notebook_data.py        # figures, tables and code excerpts into src/report/build/
+.venv/bin/python src/report/make_report.py --answers cover.json
+```
+
+`cover.json` holds the cover details (university, degree, student, student ID, course code and name, professor, assignment number and title, date). It contains personal details, so keep it out of git. The builder is a personal Claude Code skill, `geometrika-report-builder`, with its `msc-assignment` profile.
 
 ## Dataset
 
