@@ -63,13 +63,13 @@ def mtab(models, cols):
     return [[m.replace("Tree | ", "Tree, ").replace("Baseline | ", "") ] + [f(M[m][c]) for c in cols] for m in models]
 
 
-spec = {"profile": "msc-assignment", "sections": [], "references": [], "abstract": ""}
+spec = {"profile": "msc-assignment", "sections": [], "abstract": ""}
 add = lambda title, blocks: spec["sections"].append({"title": title, "blocks": blocks})
 
 spec["abstract"] = (
-    f"This report predicts the hourly CO concentration (CO(GT)) from five metal-oxide sensor signals and three weather variables of the UCI Air Quality dataset [1]. "
+    f"This report predicts the hourly CO concentration (CO(GT)) from five metal-oxide sensor signals and three weather variables of the UCI Air Quality dataset. "
     f"After removing the {R['n']['raw_rows'] - R['n']['model_rows']:,} unusable rows, {R['n']['model_rows']:,} hours remain, split 80/20 and standardised. "
-    f"Linear and polynomial regression were written from scratch (NumPy) and verified against scikit-learn [2]; Decision Trees were trained for max_depth 3, 5, 10 and None. "
+    f"Linear and polynomial regression were written from scratch (NumPy) and verified against scikit-learn; Decision Trees were trained for max_depth 3, 5, 10 and None. "
     f"All choices were made with week-grouped cross-validation. On the test set the degree-2 polynomial is best (RMSE {f(M[POL]['test_rmse'])} mg/m³, R² {f(M[POL]['test_r2'])}), "
     f"linear regression follows (RMSE {f(M[LIN]['test_rmse'])}, R² {f(M[LIN]['test_r2'])}) and beats every Decision Tree (best: depth 5, RMSE {f(M[T5]['test_rmse'])}). "
     f"The PT08.S2(NMHC) sensor dominates every importance measure."
@@ -148,7 +148,7 @@ add("Model training", [
         [n, f(M[k]["train_rmse"], 4), f(M[k]["test_rmse"], 4), f(M[k]["test_r2"], 4)] for n, k in [("Scratch, normal equation", LIN), ("Scratch, gradient descent", LGD), ("scikit-learn LinearRegression", LSK)]]},
     {"type": "p", "text": "The three implementations give the same coefficients (to 1e-8 for the closed form) and identical metrics. The train-test RMSE gap is small (0.013), so the linear model is limited by bias, not variance."},
     {"type": "subsection", "title": "Polynomial regression and the choice of degree"},
-    {"type": "p", "text": f"A from-scratch feature expansion builds every monomial of total degree 1 to d (it matches `sklearn.preprocessing.PolynomialFeatures` exactly); the expanded matrix is re-standardised with training-fold statistics before the least-squares fit. The degree is chosen by cross-validation, using the one-standard-error rule [3], [4]: the smallest degree whose CV RMSE is within one standard error of the best."},
+    {"type": "p", "text": f"A from-scratch feature expansion builds every monomial of total degree 1 to d (it matches `sklearn.preprocessing.PolynomialFeatures` exactly); the expanded matrix is re-standardised with training-fold statistics before the least-squares fit. The degree is chosen by cross-validation, using the one-standard-error rule: the smallest degree whose CV RMSE is within one standard error of the best."},
     {"type": "table", "headers": ["Degree", "Terms", "Train RMSE", "CV RMSE", "CV RMSE sd", "CV R²", ""], "widths": [0.1, 0.12, 0.17, 0.17, 0.17, 0.12, 0.15], "size": "small", "shade": [DEG - 1],
      "rows": [[str(i + 1), f"{int(r['n_terms'])}", f(r["train_rmse"]), f(r["cv_rmse"]), f(r["cv_rmse_sd"]), f(r["cv_r2"]), "chosen" if (i + 1) == DEG else ""] for i, r in enumerate(R["poly_unreg"])]},
     fig("poly_degree", f"Degree selection. Left: training RMSE falls monotonically while CV RMSE is U-shaped. Centre and right: crossing the degree with a ridge penalty rescues degrees 4 and 5 but never beats degree {DEG}."),
@@ -328,13 +328,6 @@ add("Appendix B: deliverables and reproducibility", [
     {"type": "p", "text": f"The notebook runs top to bottom from the raw CSV in about 30 seconds (Python {R['py']}, numpy {R['versions']['numpy']}, pandas {R['versions']['pandas']}, scikit-learn {R['versions']['sklearn']}, random seed 42). This report is generated from the executed notebook by `src/report/`."},
 ])
 
-spec["references"] = [
-    "S. De Vito, E. Massera, M. Piga, L. Martinotto and G. Di Francia, “On field calibration of an electronic nose for benzene estimation in an urban pollution monitoring scenario,” //Sensors and Actuators B: Chemical//, vol. 129, no. 2, pp. 750-757, 2008. Dataset: “Air Quality,” UCI Machine Learning Repository, https://archive.ics.uci.edu/dataset/360/air+quality.",
-    "F. Pedregosa et al., “Scikit-learn: Machine learning in Python,” //Journal of Machine Learning Research//, vol. 12, pp. 2825-2830, 2011.",
-    "T. Hastie, R. Tibshirani and J. Friedman, //The Elements of Statistical Learning//, 2nd ed. Springer, 2009.",
-    "L. Breiman, J. Friedman, R. Olshen and C. Stone, //Classification and Regression Trees//. Wadsworth, 1984.",
-    "D. P. Kingma and J. Ba, “Adam: A method for stochastic optimization,” in //Proc. ICLR//, 2015.",
-]
 
 
 def main():
