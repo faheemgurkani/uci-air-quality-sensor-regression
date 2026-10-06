@@ -1,6 +1,6 @@
 # Stage 6 — Discussion and deliverables
 
-Notebook: `src/notebooks/air_quality_regression.ipynb`, Stage 6. PDF report: `docs/report/air_quality_regression_report.pdf` (70 pages, generated from the executed notebook).
+Notebook: `src/notebooks/air_quality_regression.ipynb`, Stage 6. PDF exports: `docs/report/air_quality_regression_notebook.pdf` (the executed notebook with all code and outputs, 70 pages) and the house-style assignment report built by `src/report/` (cover page, results, discussion, code excerpts; 23 pages).
 
 ## Short answers
 
@@ -22,4 +22,4 @@ Hour-of-day and day-of-week features, ensembles (random forest, gradient boostin
 
 ## Deliverables
 
-The notebook contains a checklist mapping every requirement of the brief to a notebook section (final cell of Stage 6). The PDF is regenerated from the notebook with `nbconvert` to HTML and headless Chrome printing.
+The notebook contains a checklist mapping every requirement of the brief to a notebook section (final cell of Stage 6). The notebook PDF is regenerated with `nbconvert` to HTML and headless Chrome printing. The assignment report is regenerated with `src/report/export_notebook_data.py` and `src/report/make_report.py`; the cover details are supplied in a local file that is not stored in the repository.
