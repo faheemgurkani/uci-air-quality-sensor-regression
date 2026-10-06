@@ -6,7 +6,7 @@ Notebook: `src/notebooks/air_quality_regression.ipynb`, Stage 3 (sections 3.1–
 
 - **Required metrics (3.1):** MSE, RMSE and R² for all 15 models on train and test, plus MAE, CV scores and the train–test gap.
 - **Uncertainty (3.2):** week-clustered bootstrap (1,000 resamples of 57 test weeks) for test RMSE and R², paired differences between models on the same resamples, and a fold-wise CV comparison. Hours inside a week are correlated, so weeks, not hours, are resampled.
-- **Metrics vs epoch (3.3):** train and test MSE, RMSE and R² per epoch for the gradient-trained linear model and the polynomial (Adam) model, with the closed-form optimum marked, and a learning-rate convergence plot.
+- **Metrics vs epoch (3.3):** train and test MSE, RMSE and R² per epoch for the gradient-trained linear model and the polynomial (Adam) model, with the closed-form optimum marked (the learning-rate sweep is in Stage 2, section 2.2.1).
 - **Metrics vs tree depth (3.4):** train, CV and test MSE, RMSE and R² for depths 1–20 and None, with the required depths 3, 5, 10 and None marked.
 - **Residual diagnostics (3.5) and error breakdown (3.6):** predicted vs actual, residuals vs fitted, distributions, time, CO regime, hour of day and month.
 - **Summary (3.7):** accuracy vs complexity vs fit time.
