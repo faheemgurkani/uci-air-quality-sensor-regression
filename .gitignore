@@ -1,5 +1,5 @@
 # Course material (assignment brief)
-docs/
+docs/rough/
 
 # Python environment & caches
 .venv/
@@ -11,3 +11,6 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+
+# Claude Code guidance (local only)
+CLAUDE.md
