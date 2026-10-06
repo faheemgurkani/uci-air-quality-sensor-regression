@@ -1,6 +1,6 @@
 # Stage 6 — Discussion and deliverables
 
-Notebook: `src/notebooks/air_quality_regression.ipynb`, Stage 6. PDF report: `docs/report/air_quality_regression_report.pdf` (74 pages, generated from the executed notebook).
+Notebook: `src/notebooks/air_quality_regression.ipynb`, Stage 6. PDF report: `docs/report/air_quality_regression_report.pdf` (70 pages, generated from the executed notebook).
 
 ## Short answers
 
